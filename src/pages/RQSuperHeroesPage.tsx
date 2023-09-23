@@ -5,6 +5,15 @@ const fetchSuperHeroes = () => {
   return axios.get("http://localhost:4000/superheroes");
 };
 
+// Polling이란?
+// 정기적으로 데이터를 가져오는 프로세스를 나타냄
+// 예를 들어 매초 데이터를 가져오는 싶은 다양한 주식의 실시간 가격을 표시하는 컴포넌트
+// 사용자와의 상호 작용에 의존하는 것이 아니라 항상 원격 데이터와 동기화되도록 보장
+// refetchInterval을 통해서 밀리초 단위로 숫자를 설정할 수 있다 (기본값은 false)
+// 하지만 refetchInterval만 사용할 경우 사용자가 브라우저에 focus를 하지 않을 경우에는
+// 데이터 패칭이 이루어지지 않는다. 만약 브라우저를 포커스 해도 데이터 패칭을 하고 싶다면
+// refetchIntervalInBackground를 true로 설정해야 한다.
+
 const RQSuperHeroesPage = () => {
   // staleTime : 데이터가 만료되어 새로운 데이터를 다시 가져와야 하는 시간 (기본값 0)
   // cacheTime : 쿼리의 데이터를 캐시로 저장하는 기간 (기본값 5분)
@@ -20,7 +29,9 @@ const RQSuperHeroesPage = () => {
     queryFn: fetchSuperHeroes,
     staleTime: 30000,
     refetchOnMount: true,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+    // refetchInterval: 2000,
+    // refetchIntervalInBackground: true,
   });
 
   console.log({ isLoading, isFetching });
