@@ -15,6 +15,17 @@ const fetchSuperHeroes = () => {
 // refetchIntervalInBackground를 true로 설정해야 한다.
 
 const RQSuperHeroesPage = () => {
+  // 데이터 패칭이 성공했을 때
+  const onSuccess = (data) => {
+    console.log("Perform side effect after data fetching", data);
+  };
+  // 데이터 패칭에 실패했을 때
+  const onError = (error) => {
+    console.log("Perform side effect after encountering error", error);
+  };
+  // React Query 4에서는 onSuccess와 onError를 사용하지 않습니다.
+  // data 또는 error 값을 통해서 해당 작업을 대신 수행하기를 권장합니다.
+
   // staleTime : 데이터가 만료되어 새로운 데이터를 다시 가져와야 하는 시간 (기본값 0)
   // cacheTime : 쿼리의 데이터를 캐시로 저장하는 기간 (기본값 5분)
   // RQ는 한 번 요청한 쿼리를 cache에 저장하기 하고 (기본 5분) cache에 저장된 쿼리는 서버에서서 가져오는
@@ -27,7 +38,7 @@ const RQSuperHeroesPage = () => {
   const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
-    enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
+    // enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
     // staleTime: 30000,
     // refetchOnMount: true,
     // refetchOnWindowFocus: true,
@@ -42,8 +53,10 @@ const RQSuperHeroesPage = () => {
   }
 
   if (isError) {
+    onError();
     return <h2>{error.message}</h2>;
   }
+
   return (
     <main>
       <h1>RQSuperHeroesPage</h1>
