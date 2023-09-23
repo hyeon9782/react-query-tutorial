@@ -7,6 +7,7 @@ const fetchSuperHeroes = () => {
 
 const RQSuperHeroesPage = () => {
   const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
   });
 
