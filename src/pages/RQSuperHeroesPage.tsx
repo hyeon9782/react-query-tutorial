@@ -12,10 +12,15 @@ const RQSuperHeroesPage = () => {
   // 것이 아니라 cache에서 가져옵니다. (Network에서 fetch는 확인할 수 있다)
   // 하지만 데이터 패칭을 자주할 필요가 없는 페이지인 경우 staleTime을 통해 데이터 패칭 자체를 일정 시간동안
   // 안할 수 있수 있습니다.
+  // refetchOnMount - true 해당 컴포넌트가 mount될 때마다 데이터 패칭, false면 패칭 ㄴ
+  // 'always'라면 staleTime과 상관없이 언제나 마운트될 때 데이터 패칭
+  // refetchOnWindowFocus - 사용자가 Window를 Focus 했을 때 데이터 패칭
   const { data, isLoading, isError, error, isFetching } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
     staleTime: 30000,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
 
   console.log({ isLoading, isFetching });
