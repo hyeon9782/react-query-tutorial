@@ -24,19 +24,20 @@ const RQSuperHeroesPage = () => {
   // refetchOnMount - true 해당 컴포넌트가 mount될 때마다 데이터 패칭, false면 패칭 ㄴ
   // 'always'라면 staleTime과 상관없이 언제나 마운트될 때 데이터 패칭
   // refetchOnWindowFocus - 사용자가 Window를 Focus 했을 때 데이터 패칭
-  const { data, isLoading, isError, error, isFetching } = useQuery({
+  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
-    staleTime: 30000,
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
+    enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
+    // staleTime: 30000,
+    // refetchOnMount: true,
+    // refetchOnWindowFocus: true,
     // refetchInterval: 2000,
     // refetchIntervalInBackground: true,
   });
 
   console.log({ isLoading, isFetching });
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <h2>Loading...</h2>;
   }
 
@@ -46,6 +47,7 @@ const RQSuperHeroesPage = () => {
   return (
     <main>
       <h1>RQSuperHeroesPage</h1>
+      <button onClick={() => refetch()}>Fetch heroes</button>
       {data?.data.map((hero) => {
         return <div key={hero.id}>{hero.name}</div>;
       })}
