@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import RQSuperHeroPage from "./pages/RQSuperHeroPage";
 import ParallelQueriesPage from "./pages/ParallelQueriesPage";
+import DynamicParallelPage from "./pages/DynamicParallelPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,10 @@ function App() {
           <Route
             path="/rq-super-heroes/:heroId"
             element={<RQSuperHeroPage />}
+          />
+          <Route
+            path="/rq-dynamic-parallel"
+            element={<DynamicParallelPage heroIds={[1, 3]} />}
           />
           <Route path="/rq-parallel" element={<ParallelQueriesPage />} />
         </Routes>

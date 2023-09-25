@@ -10,6 +10,7 @@ const fetchFriends = () => {
 };
 
 const ParallelQueriesPage = () => {
+  // 병렬 쿼리를 사용할 때는 별칭을 사용하여 데이터를 사용하자
   const { data: superHeroes } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
