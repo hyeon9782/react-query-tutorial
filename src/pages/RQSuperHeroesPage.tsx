@@ -38,6 +38,12 @@ const RQSuperHeroesPage = () => {
   const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["super-heroes"],
     queryFn: fetchSuperHeroes,
+    select: (data) => {
+      // select를 사용해서 서버에서 온 데이터를 가공해서 넘겨줄 수 있다.
+      // 여기서 return해준 값이 data에 담긴다.
+      const superHeroNames = data.data.map((hero) => hero.name);
+      return superHeroNames;
+    },
     // enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
     // staleTime: 30000,
     // refetchOnMount: true,
@@ -53,7 +59,7 @@ const RQSuperHeroesPage = () => {
   }
 
   if (isError) {
-    onError();
+    onError(error);
     return <h2>{error.message}</h2>;
   }
 
@@ -61,8 +67,11 @@ const RQSuperHeroesPage = () => {
     <main>
       <h1>RQSuperHeroesPage</h1>
       <button onClick={() => refetch()}>Fetch heroes</button>
-      {data?.data.map((hero) => {
+      {/* {data?.data.map((hero) => {
         return <div key={hero.id}>{hero.name}</div>;
+      })} */}
+      {data.map((heroName) => {
+        return <div>{heroName}</div>;
       })}
     </main>
   );
