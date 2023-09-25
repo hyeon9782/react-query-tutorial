@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useSuperHeroesData from "../hooks/useSuperHeroesData";
+import { Link } from "react-router-dom";
 
 const fetchSuperHeroes = () => {
   return axios.get("http://localhost:4000/superheroes");
@@ -71,12 +72,16 @@ const RQSuperHeroesPage = () => {
     <main>
       <h1>RQSuperHeroesPage</h1>
       <button onClick={() => refetch()}>Fetch heroes</button>
-      {/* {data?.data.map((hero) => {
-        return <div key={hero.id}>{hero.name}</div>;
-      })} */}
-      {data.map((heroName) => {
-        return <div>{heroName}</div>;
+      {data?.data.map((hero) => {
+        return (
+          <div key={hero.id}>
+            <Link to={`/rq-super-heroes/${hero.id}`}>{hero.name}</Link>
+          </div>
+        );
       })}
+      {/* {data.map((heroName) => {
+        return <div>{heroName}</div>;
+      })} */}
     </main>
   );
 };
