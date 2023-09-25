@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import RQSuperHeroPage from "./pages/RQSuperHeroPage";
 import ParallelQueriesPage from "./pages/ParallelQueriesPage";
 import DynamicParallelPage from "./pages/DynamicParallelPage";
+import DependentQueriesPage from "./pages/DependentQueriesPage";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,10 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route
+            path="/rq-dependent"
+            element={<DependentQueriesPage email="hyeon9782@gmail.com" />}
+          />
           <Route path="/" element={<HomePage />} />
           <Route path="/super-heroes" element={<SuperHeroesPage />} />
           <Route path="/rq-super-heroes" element={<RQSuperHeroesPage />} />
