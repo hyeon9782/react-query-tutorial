@@ -15,6 +15,9 @@ const Header = () => {
       <li>
         <Link to="/rq-parallel">ParallelQueriesPage</Link>
       </li>
+      <li>
+        <Link to="/rq-paginated">PaginatedQueriesPage</Link>
+      </li>
     </ul>
   );
 };
