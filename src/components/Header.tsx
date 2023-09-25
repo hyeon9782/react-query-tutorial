@@ -18,6 +18,9 @@ const Header = () => {
       <li>
         <Link to="/rq-paginated">PaginatedQueriesPage</Link>
       </li>
+      <li>
+        <Link to="/rq-infinite">InfiniteQueriesPage</Link>
+      </li>
     </ul>
   );
 };

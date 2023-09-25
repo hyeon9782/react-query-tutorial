@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import useSuperHeroesData from "../hooks/useSuperHeroesData";
+import useSuperHeroesData, {
+  useAddSuperHeroData,
+} from "../hooks/useSuperHeroesData";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const fetchSuperHeroes = () => {
   return axios.get("http://localhost:4000/superheroes");
@@ -17,6 +20,8 @@ const fetchSuperHeroes = () => {
 // refetchIntervalInBackground를 true로 설정해야 한다.
 
 const RQSuperHeroesPage = () => {
+  const [name, setName] = useState("");
+  const [alrterEgo, setAlrterEgo] = useState("");
   // 데이터 패칭이 성공했을 때
   const onSuccess = (data) => {
     console.log("Perform side effect after data fetching", data);
@@ -56,8 +61,11 @@ const RQSuperHeroesPage = () => {
 
   const { data, isLoading, isError, error, isFetching, refetch } =
     useSuperHeroesData();
+  const { mutate } = useAddSuperHeroData();
 
-  console.log({ isLoading, isFetching });
+  const handleAddHeroClick = () => {
+    console.log({ name, alrterEgo });
+  };
 
   if (isLoading || isFetching) {
     return <h2>Loading...</h2>;
@@ -71,6 +79,19 @@ const RQSuperHeroesPage = () => {
   return (
     <main>
       <h1>RQSuperHeroesPage</h1>
+      <div>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          value={alrterEgo}
+          onChange={(e) => setAlrterEgo(e.target.value)}
+        />
+        <button onClick={handleAddHeroClick}>Add Hero</button>
+      </div>
       <button onClick={() => refetch()}>Fetch heroes</button>
       {data?.data.map((hero) => {
         return (
