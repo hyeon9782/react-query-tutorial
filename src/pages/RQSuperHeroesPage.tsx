@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import useSuperHeroesData, {
+import {
+  useSuperHeroesData,
   useAddSuperHeroData,
 } from "../hooks/useSuperHeroesData";
 import { Link } from "react-router-dom";
@@ -61,10 +62,18 @@ const RQSuperHeroesPage = () => {
 
   const { data, isLoading, isError, error, isFetching, refetch } =
     useSuperHeroesData();
-  const { mutate } = useAddSuperHeroData();
+  // mutate에 인수를 넣으면 addSuperHero함수에 전달된다.
+  const {
+    mutate: addHero,
+    isLoading: addLoading,
+    isError: addIsError,
+    error: addError,
+  } = useAddSuperHeroData();
 
   const handleAddHeroClick = () => {
     console.log({ name, alrterEgo });
+    const hero = { name, alrterEgo };
+    addHero(hero);
   };
 
   if (isLoading || isFetching) {
