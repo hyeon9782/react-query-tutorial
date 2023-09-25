@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import useSuperHeroesData from "../hooks/useSuperHeroesData";
 
 const fetchSuperHeroes = () => {
   return axios.get("http://localhost:4000/superheroes");
@@ -35,22 +36,25 @@ const RQSuperHeroesPage = () => {
   // refetchOnMount - true 해당 컴포넌트가 mount될 때마다 데이터 패칭, false면 패칭 ㄴ
   // 'always'라면 staleTime과 상관없이 언제나 마운트될 때 데이터 패칭
   // refetchOnWindowFocus - 사용자가 Window를 Focus 했을 때 데이터 패칭
-  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["super-heroes"],
-    queryFn: fetchSuperHeroes,
-    select: (data) => {
-      // select를 사용해서 서버에서 온 데이터를 가공해서 넘겨줄 수 있다.
-      // 여기서 return해준 값이 data에 담긴다.
-      const superHeroNames = data.data.map((hero) => hero.name);
-      return superHeroNames;
-    },
-    // enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
-    // staleTime: 30000,
-    // refetchOnMount: true,
-    // refetchOnWindowFocus: true,
-    // refetchInterval: 2000,
-    // refetchIntervalInBackground: true,
-  });
+  // const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
+  //   queryKey: ["super-heroes"],
+  //   queryFn: fetchSuperHeroes,
+  //   select: (data) => {
+  //     // select를 사용해서 서버에서 온 데이터를 가공해서 넘겨줄 수 있다.
+  //     // 여기서 return해준 값이 data에 담긴다.
+  //     const superHeroNames = data.data.map((hero) => hero.name);
+  //     return superHeroNames;
+  //   },
+  //   // enabled: false, // 컴포넌트가 mount될 때 데이터를 패칭하는 것을 비활성화
+  //   // staleTime: 30000,
+  //   // refetchOnMount: true,
+  //   // refetchOnWindowFocus: true,
+  //   // refetchInterval: 2000,
+  //   // refetchIntervalInBackground: true,
+  // });
+
+  const { data, isLoading, isError, error, isFetching, refetch } =
+    useSuperHeroesData();
 
   console.log({ isLoading, isFetching });
 
