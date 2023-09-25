@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchSuperHeroes = () => {
@@ -23,7 +23,12 @@ export const useSuperHeroesData = () => {
 };
 
 export const useAddSuperHeroData = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: addSuperHero,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["super-heroes"]); // 해당 key값을 가지고 있는 쿼리를 무효화함
+      // 해당 쿼리를 서버에서 다시 가져옴
+    },
   });
 };
