@@ -12,6 +12,9 @@ const Header = () => {
       <li>
         <Link to="/rq-super-heroes">RQSuperHeroesPage</Link>
       </li>
+      <li>
+        <Link to="/rq-parallel">ParallelQueriesPage</Link>
+      </li>
     </ul>
   );
 };
